@@ -20,20 +20,20 @@ public class ShowTasksController {
     }
 
     @GetMapping
-    public String showForm(@AuthenticationPrincipal User user, Model model){
+    public String loadTasks(@AuthenticationPrincipal User user, Model model){
         model.addAttribute("tasks", tasksService.showTasks(user));
         return "tasks";
     }
 
     @GetMapping("/{id}/edit")
-    public String editForm(@PathVariable int id, @AuthenticationPrincipal User user ,Model model){
+    public String loadEdit(@PathVariable int id, @AuthenticationPrincipal User user ,Model model){
         Task task = tasksService.findByIdAndUser(id, user);
         model.addAttribute("task", task);
         return "edit-task";
     }
 
     @PostMapping("/{id}/edit")
-    public String editTask(@AuthenticationPrincipal User user, @PathVariable int id, @ModelAttribute Task task, Model model){
+    public String processEdit(@AuthenticationPrincipal User user, @PathVariable int id, @ModelAttribute Task task, Model model){
         Task existing = tasksService.findByIdAndUser(id, user);
         existing.setTitle(task.getTitle());
         existing.setDescription(task.getDescription());
@@ -43,6 +43,7 @@ public class ShowTasksController {
         tasksService.saveTask(existing);
         return "redirect:/tasks";
     }
+
     @PostMapping("/{id}/delete")
     public String deleteTask(@AuthenticationPrincipal User user, @PathVariable int id){
         tasksService.deleteTask(id,user);
@@ -50,12 +51,13 @@ public class ShowTasksController {
     }
 
     @PostMapping("/{id}/complete")
-    public String completeTask(@AuthenticationPrincipal User user, @PathVariable int id, @ModelAttribute Task task){
+    public String setCompleted(@AuthenticationPrincipal User user, @PathVariable int id, @ModelAttribute Task task){
         Task existing = tasksService.findByIdAndUser(id, user);
         existing.markAsCompleted();
         tasksService.saveTask(existing);
         return "redirect:/tasks";
     }
+
     @GetMapping("/filter/")
     public String filterTasksByPriority(@AuthenticationPrincipal User user, @RequestParam(required = false) Task.Priority priority, @ModelAttribute Task task, Model model){
         if(priority == null) return "redirect:/tasks";

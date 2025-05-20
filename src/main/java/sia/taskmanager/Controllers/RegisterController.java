@@ -7,10 +7,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import sia.taskmanager.Forms.RegistrationForm;
-import sia.taskmanager.Models.User;
 import sia.taskmanager.Services.UserService;
 @Slf4j
 @Controller
@@ -23,11 +21,13 @@ public class RegisterController {
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
     }
+
     @GetMapping
     public String loadRegisterForm(Model model) {
         model.addAttribute("registrationForm", new RegistrationForm());
-        return "registerForm";
+        return "register";
     }
+
     @PostMapping
     public String processRegisterForm(@Valid @ModelAttribute("registrationForm") RegistrationForm form, BindingResult bindingResult) {
         userService.save(form.toUser(passwordEncoder));

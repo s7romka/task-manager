@@ -14,26 +14,29 @@ import java.util.List;
 
 @Service
 public class TasksService{
-    private final UserRepository userRepository;
-    private TaskRepository taskRepository;
+    private final TaskRepository taskRepository;
     @Autowired
-    public TasksService(TaskRepository taskRepository, UserRepository userRepository) {
+    public TasksService(TaskRepository taskRepository) {
         this.taskRepository = taskRepository;
-        this.userRepository = userRepository;
     }
+
     public void saveTask(Task task) {
         taskRepository.save(task);
     }
+
     public List<Task> showTasks(User user) {
         return taskRepository.findByUserOrderByDueDateDesc(user);
     }
+
     public Task findByIdAndUser(int id, User user) {
         return taskRepository.findByIdAndUser(id, user);
     }
+
     @Transactional
     public void deleteTask(int id, User user) {
         taskRepository.deleteByIdAndUser(id, user);
     }
+
     public Task findTaskByPriority(Task.Priority priority, User user) {
         return taskRepository.findTasksByPriorityAndUser(priority, user);
     }
