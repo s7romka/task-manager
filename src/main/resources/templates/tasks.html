@@ -55,6 +55,11 @@
             bottom: 50px;
             right: 50px;
         }
+        .profile-link {
+            position: absolute;
+            bottom: 90px;
+            right: 50px;
+        }
 
         .link a, .link-button {
             display: inline-block;
@@ -148,6 +153,9 @@
     </table>
 </div>
 <div class="link">
+    <div class="profile-link">
+        <a th:href="@{/profile}" class="link-button">Profile</a>
+    </div>
     <div class="logout-link">
         <form th:action="@{/logout}" method="post">
             <button type="submit" class="link-button">Log out</button>

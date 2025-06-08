@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .my-tasks {
+            position: absolute;
+            top: 40px;
+            right: 800px;
+        }
+
+        .logout-link {
+            position: absolute;
+            bottom: 50px;
+            right: 50px;
+        }
+
+        .link a, .link-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 14px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .link a:hover, .link-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div class="link">
+    <div class="my-tasks">
+        <a th:href="@{/tasks}">Show tasks</a>
+    </div>
+</div>
+<div class="container">
+    <h2>My Profile</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Login</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Date of Joining</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td th:text="${user.login}"></td>
+            <td th:text="${user.username}"></td>
+            <td th:text="${user.email}"></td>
+            <td th:text="${user.createdAt}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="link">
+    <div class="logout-link">
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="link-button">Log out</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

@@ -6,7 +6,10 @@ import sia.taskmanager.Models.User;
 
 import java.util.Optional;
 
+
 @Repository
 public interface UserRepository extends CrudRepository<User, Integer> {
-     User findByLogin(String login);
+     Optional<User> findByLogin(String login);
+     Optional<User> findByToken(String token);
+     Optional<User> findByEmail(String email);
 }

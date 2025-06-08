@@ -9,18 +9,14 @@ import jakarta.validation.constraints.NotNull;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 @Data
 @Entity
 @RequiredArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
+@NoArgsConstructor(access = AccessLevel.PUBLIC, force = true)
 public class User implements UserDetails{
     private static final long serialVersionUID = 1L;
     @Id
@@ -31,7 +27,7 @@ public class User implements UserDetails{
     private final String login;
     @NotNull
     @Pattern(regexp = "^(?=.*[A-Z])(?=.*\\d).+$", message = "Your password must have at least one capital letter and digit: ")
-    private final String password;
+    private String password;
     @NotNull
     @Column(unique = true)
     @NotBlank(message = "invalid username")
@@ -42,6 +38,9 @@ public class User implements UserDetails{
     private final String email;
     @NotNull
     private final Date createdAt;
+
+    private String token;
+    private boolean enabled;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -65,6 +64,7 @@ public class User implements UserDetails{
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return enabled;
     }
+
 }

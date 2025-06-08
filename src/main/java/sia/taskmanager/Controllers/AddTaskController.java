@@ -40,7 +40,7 @@ public class AddTaskController {
         }
         User user = (User) authentication.getPrincipal();
         task.setUser(user);
-        task.setStatus(task.getStatus());
+        task.setStatus(task.calculateStatus());
         tasksService.saveTask(task);
         return "redirect:/tasks";
     }

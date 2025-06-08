@@ -3,8 +3,6 @@ package sia.taskmanager.Models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.time.LocalDate;
 
@@ -57,7 +55,7 @@ public class Task {
             return displayString;
         }
     }
-    public Status getStatus() {
+    public Status calculateStatus() {
         LocalDate today = LocalDate.now();
         if (this.status == Status.COMPLETED) {
             return Status.COMPLETED;
